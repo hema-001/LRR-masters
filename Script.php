@@ -414,7 +414,7 @@ if (!empty($_POST["frm_uploadlab"])) {
          
          
     $deadline = $deadlinedate." ".$deadlinetime;
-    $date =  date("Y-m-d H:i");
+    $date =  date("Y-m-d H:i:s");
             
        
        
@@ -537,7 +537,7 @@ if (!empty($_POST["frm_submitlab"])) {
     $url = mysqli_real_escape_string($con, $_POST["url"]);
     
     $deadline = $deadlinedate." ".$deadlinetime;
-    $date = date("Y-m-d H:i");
+    $date = date("Y-m-d H:i:s");
     
     // GET UPLOADED FILES
     $labName = mysqli_query($con,"SELECT * FROM `lab_reports_table` WHERE Lab_Report_ID=$lab_id");
@@ -633,17 +633,17 @@ if (!empty($_POST["frm_submitlab"])) {
     $targetfile4 = "";
 
     if(strlen($_FILES['attachment1']['name']) > 2 ) { // why greater than 2???
-        $targetfile = "/".$student_id."/".$url."/".$lab_name."/".$_FILES['attachment1']['name'];
+        $targetfile = "/".$student_id."/".$url."/".$lab_name."/".rawurlencode($_FILES['attachment1']['name']);
     }
    
     if(strlen($_FILES['attachment2']['name']) > 2 ) {
-        $targetfile2 = "/".$student_id."/".$url."/".$lab_name."/".$_FILES['attachment2']['name']; }
+        $targetfile2 = "/".$student_id."/".$url."/".$lab_name."/".rawurlencode($_FILES['attachment2']['name']); }
  
     if(strlen($_FILES['attachment3']['name']) > 2 ) {
-        $targetfile3 = "/".$student_id."/".$url."/".$lab_name."/".$_FILES['attachment3']['name'];}
+        $targetfile3 = "/".$student_id."/".$url."/".$lab_name."/".rawurlencode($_FILES['attachment3']['name']);}
    
     if(strlen($_FILES['attachment4']['name']) > 2 ) {
-        $targetfile4 = "/".$student_id."/".$url."/".$lab_name."/".$_FILES['attachment4']['name'];
+        $targetfile4 = "/".$student_id."/".$url."/".$lab_name."/".rawurlencode($_FILES['attachment4']['name']);
     }
 
     // When $group_id is not properly initialized, use integer 0 as its value.
@@ -729,7 +729,7 @@ if (!empty($_GET["savemarks"])) {
         echo " Marks could not be greater than total";
         return;
     }
-    $date=  date("Y-m-d H:i");
+    $date=  date("Y-m-d H:i:s");
     $feedback="<br>@$date : ".$feedback;
         
     $sql="UPDATE `lab_report_submissions` SET `Marks`='$marks',`Status`='$status',"
